@@ -1,5 +1,3 @@
-import math
-
 input_n = int(input())
 while input_n > 0:
     print('{ ', end='')
