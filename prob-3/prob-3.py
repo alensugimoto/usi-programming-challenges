@@ -1,21 +1,20 @@
 import math
 
 
-def rec(n):
-    def rec_acc(n, P):
-        if n == 0:
-            return P
-        else:
-            pow_2 = 2 ** int(math.log(n) / math.log(2))
-            left = 3 ** int(math.log(pow_2) / math.log(2))
-            return rec_acc(n - pow_2, [left] + P)
-    return rec_acc(n, [])
+def rec(n, is_first):
+    if n != 0:
+        pow_2 = 2 ** int(math.log(n) / math.log(2))
+        right = 3 ** int(math.log(pow_2) / math.log(2))
+        rec(n - pow_2, False)
+        print(right, end='')
+        if not is_first:
+            print(',', end='')
+        print(' ', end='')
 
 
 n = int(input())
 while n > 0:
-    if n == 1:
-        print('{ }')
-    else:
-        print('{ %s }' % ', '.join(map(str, rec(n - 1))))
+    print('{ ', end='')
+    rec(n - 1, True)
+    print('}')
     n = int(input())
