@@ -57,7 +57,7 @@ def find_min(a, b, x):
         length = len(a)
         summ = sum([int(digit) for digit in a])
         if summ == int(x):
-            return b
+            return a
         elif summ < int(x):
             min = go_to_min(a, x)
             if int(min) < int(b):
