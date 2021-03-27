@@ -16,6 +16,7 @@ for t in range(T):
                 posR = i
         if maxB == 0 or maxR == 0:
             break
-        pairs[posB], pairs[posR] = "", ""
+        pairs[posB - 1:posB + 1] = []
+        pairs[posR - 1:posR + 1] = []
         max += maxB + maxR - 2
     print("Case #%i: %i" % (t + 1, max))
