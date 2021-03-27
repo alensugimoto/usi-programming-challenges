@@ -1,22 +1,18 @@
 T = int(input())
 for t in range(T):
     n = int(input())
-    pairs = input().split()
+    seg = input().split()
+    B, R = [], []
+    for i in range(0, 2 * n, 2):
+        if seg[i + 1] == "B":
+            B.append(int(seg[i]))
+        elif seg[i + 1] == "R":
+            R.append(int(seg[i]))
+    if len(B) > len(R):
+        B.sort(reverse=True)
+    elif len(R) > len(B):
+        R.sort(reverse=True)
     max = 0
-    for _ in range(n // 2):
-        maxB, posB = 0, 0
-        maxR, posR = 0, 0
-        for i in range(1, len(pairs), 2):
-            length = int(pairs[i - 1])
-            if pairs[i] == "B" and length > maxB:
-                maxB = length
-                posB = i
-            elif pairs[i] == "R" and length > maxR:
-                maxR = length
-                posR = i
-        if maxB == 0 or maxR == 0:
-            break
-        pairs[posB - 1:posB + 1] = []
-        pairs[posR - 1:posR + 1] = []
-        max += maxB + maxR - 2
+    for i in range(min(len(B), len(R))):
+        max += B[i] + R[i] - 2
     print("Case #%i: %i" % (t + 1, max))
