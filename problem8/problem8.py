@@ -10,13 +10,12 @@ for t in range(T):
             length = int(pairs[i - 1])
             if pairs[i] == "B" and length > maxB:
                 maxB = length
-                posB = i - 1
+                posB = i
             elif pairs[i] == "R" and length > maxR:
                 maxR = length
-                posR = i - 1
+                posR = i
         if maxB == 0 or maxR == 0:
             break
+        pairs[posB], pairs[posR] = "", ""
         max += maxB + maxR - 2
-        pairs = pairs[:posB] + pairs[posB + 2:]
-        pairs = pairs[:posR] + pairs[posR + 2:]
     print("Case #%i: %i" % (t + 1, max))
