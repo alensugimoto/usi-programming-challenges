@@ -19,10 +19,12 @@ def find_lower(a, b, x):
         digit *= 10
         a = -(-a // 10)
     # return if possible
-    if b <= llower:
+    if b < llower:
         return "none"
     if x == llower_ds:
         return str(lower)
+    if b == llower:
+        return "none"
     # get lower from its lower bound
     lower = llower
     x -= llower_ds
@@ -57,13 +59,14 @@ def find_upper(a, b, x):
             uupper_ds = digit_sum(uupper)
             digit *= 10
             b //= 10
-        if x <= uupper_ds:
-            uupper_found = True
+        uupper_found = x <= uupper_ds
     # return if possible
-    if not uupper_found or a >= uupper:
+    if not uupper_found:
         return "none"
     if x == uupper_ds:
         return str(uupper)
+    if a >= uupper:
+        return "none"
     # get upper from its upper bound
     upper = 0
     for i in range(len(str(uupper))):
