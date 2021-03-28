@@ -1,3 +1,7 @@
+# this solution was inspired by the following Stack Overflow answer:
+# https://stackoverflow.com/a/63303213
+
+
 def digit_sum(n):
     count = 0
     while n > 0:
