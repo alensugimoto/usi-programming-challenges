@@ -1,25 +1,85 @@
-def find_min(a, b, x):
-    zeros = 0
+def digit_sum(n):
+    count = 0
+    while n > 0:
+        count += n % 10
+        n //= 10
+    return count
+
+
+def find_lower(a, b, x):
+    a, b, x = int(a), int(b), int(x)
+    # find lower's lower bound,
+    # and if it is lower, return it
+    llower = a
+    digit = 1
     while True:
-        min = str(int(x) % 9) + zeros * "0" + (int(x) // 9) * "9"
-        zeros += 1
-        if int(min) > int(b):
+        llower = digit * a
+        llower_ds = digit_sum(llower)
+        if x == llower_ds:
+            return str(llower)
+        elif x > llower_ds:
+            break
+        digit *= 10
+        a = -(-a // 10)
+    if b <= llower:
+        return "none"
+    # get lower from its lower bound
+    lower = llower
+    x -= llower_ds
+    i = 0
+    while x > 0:
+        index = len(str(lower)) - 1 - i
+        if index >= 0:
+            n = min(x, 9 - int(str(lower)[index]))
+        else:
+            n = min(x, 9)
+        lower += n * 10 ** i
+        x -= n
+        i += 1
+        if b < lower:
             return "none"
-        elif int(min) >= int(a):
-            return min
+    return str(lower)
+
+
+def find_upper(a, b, x):
+    a, b, x = int(a), int(b), int(x)
+    # find upper's upper bound,
+    # and if it is upper, return it
+    uupper_found = False
+    uupper = b
+    digit = 0
+    while b > 0 and not uupper_found:
+        if digit == 0:
+            uupper_ds = digit_sum(uupper)
+            digit = 1
+        else:
+            uupper = digit * b - 1
+            uupper_ds = digit_sum(uupper)
+            digit *= 10
+            b //= 10
+        if x == uupper_ds:
+            return str(uupper)
+        elif x < uupper_ds:
+            uupper_found = True
+    if not uupper_found or a >= uupper:
+        return "none"
+    # get upper from its upper bound
+    upper = 0
+    for i in range(len(str(uupper))):
+        n = min(x, int(str(uupper)[i]))
+        upper += n * 10 ** (len(str(uupper)) - 1 - i)
+        x -= n
+    if a > upper:
+        return "none"
+    return str(upper)
 
 
 num_questions = int(input())
 for _ in range(num_questions):
     a, b, x = [int(strint) for strint in input().split()]
-    min = find_min(a, b, x)
-    if min == "none":
+    lower = find_lower(a, b, x)
+    if lower == "none":
         print("none")
         continue
-    min = int(min)
-    max = int(x) + 9 * ((int(b) - int(x)) // 9)
-    while max > min:
-        if int(x) == sum([int(d) for d in str(max)]):
-            break
-        max -= 9
-    print("%i %i" % (min, max))
+    upper = find_upper(lower, b, x)
+    print(lower + " " + upper)
