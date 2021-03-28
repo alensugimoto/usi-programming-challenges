@@ -8,21 +8,21 @@ def digit_sum(n):
 
 def find_lower(a, b, x):
     a, b, x = int(a), int(b), int(x)
-    # find lower's lower bound,
-    # and if it is lower, return it
+    # find lower's lower bound
     llower = a
     digit = 1
     while True:
         llower = digit * a
         llower_ds = digit_sum(llower)
-        if x == llower_ds:
-            return str(llower)
-        elif x > llower_ds:
+        if x >= llower_ds:
             break
         digit *= 10
         a = -(-a // 10)
+    # return if possible
     if b <= llower:
         return "none"
+    if x == llower_ds:
+        return str(lower)
     # get lower from its lower bound
     lower = llower
     x -= llower_ds
@@ -57,12 +57,13 @@ def find_upper(a, b, x):
             uupper_ds = digit_sum(uupper)
             digit *= 10
             b //= 10
-        if x == uupper_ds:
-            return str(uupper)
-        elif x < uupper_ds:
+        if x <= uupper_ds:
             uupper_found = True
+    # return if possible
     if not uupper_found or a >= uupper:
         return "none"
+    if x == uupper_ds:
+        return str(uupper)
     # get upper from its upper bound
     upper = 0
     for i in range(len(str(uupper))):
