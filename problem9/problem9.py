@@ -22,7 +22,7 @@ def find_lower(a, b, x):
     if b < llower:
         return "none"
     if x == llower_ds:
-        return str(lower)
+        return str(llower)
     if b == llower:
         return "none"
     # get lower from its lower bound
