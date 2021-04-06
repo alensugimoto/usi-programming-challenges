@@ -1,18 +1,12 @@
-n, k = [int(num) for num in input().split()]
+n, len_bases = [int(num) for num in input().split()]
 bases = [int(base) for base in input().split()]
-q = int(input())
+num_queries = int(input())
 
-for _ in range(q):
+for _ in range(num_queries):
     l, r = [int(bound) for bound in input().split()]
     count = 0
-    more = True
-    i = 0
-    while more:
-        more = False
-        for j in range(k):
-            if l <= bases[j] * i <= r:
-                count += 1
-            if bases[j] * i <= r:
-                more = True
-        i += 1
+    for i in range(len_bases):
+        l_mult = -(-l // bases[i]) * bases[i]
+        if l_mult <= r:
+            count += (r - l_mult) // bases[i] + 1
     print(count)
