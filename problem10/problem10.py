@@ -5,8 +5,14 @@ q = int(input())
 for _ in range(q):
     l, r = [int(bound) for bound in input().split()]
     count = 0
-    for i in range(n):
+    more = True
+    i = 0
+    while more:
+        more = False
         for j in range(k):
-            if l <= i * bases[j] <= r:
+            if l <= bases[j] * i <= r:
                 count += 1
+            if bases[j] * i <= r:
+                more = True
+        i += 1
     print(count)
